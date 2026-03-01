@@ -1,0 +1,54 @@
+// Roles for authorization
+Table roles {
+  id integer [pk, increment]
+  name varchar(255) [unique, not null]
+}
+
+Table users {
+  id integer [pk, increment]
+  username varchar(255) [not null, unique]
+  full_name varchar(255) [not null]
+  balance decimal(18,2) [default: 0.0, not null]
+  role_id integer [not null]
+  created_at datetime [default: 'now()', not null]
+  is_deleted boolean [not null, default: false, note: 'for soft delete']
+}
+
+Table categories {
+  id integer [pk, increment]
+  name varchar(255) [unique, not null]
+  is_deleted boolean [not null, default: false, note: 'for soft delete']
+}
+
+Table products {
+  id integer [pk, increment]
+  name varchar(255) [not null]
+  price decimal(18,2) [not null, default: 0.0]
+  quantity integer [not null, default: 0]
+  category_id integer [not null]
+  is_deleted boolean [not null, default: false, note: 'for soft delete']
+}
+
+Table orders {
+  id integer [pk, increment]
+  user_id integer [not null]
+  total_amount decimal(18,2) [not null]
+  created_at datetime [default: 'now()', not null]
+}
+
+Table order_items {
+  id integer [pk, increment]
+  order_id integer [not null]
+  product_id integer [not null]
+  unit_price decimal(18,2) [not null]
+  quantity integer [not null]
+}
+
+Ref: products.category_id > categories.id
+Ref: orders.user_id > users.id
+Ref: order_items.order_id > orders.id
+Ref: order_items.product_id > products.id
+Ref: users.role_id > roles.id
+
+  // Created by Vladyslav Savchuk
+  // Use dbdiagram with DBML
