@@ -11,6 +11,8 @@ namespace Supermarket.Domain.Entities
 
         public IReadOnlyCollection<OrderItem> Items => _items;
 
+        public User User { get; private set; } = null!;
+
         private Order() { } // for EF Core
 
         public Order(int userId, List<OrderItem> items)

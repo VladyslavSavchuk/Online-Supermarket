@@ -12,6 +12,10 @@ namespace Supermarket.Domain.Entities
 
         public int Quantity { get; private set; }
 
+        public Order Order { get; private set; } = null!;
+
+        public Product Product { get; private set; } = null!;
+
         private OrderItem() { } // for EF Core
 
         public OrderItem(int productId, decimal unitPrice, int quantity)
@@ -19,7 +23,7 @@ namespace Supermarket.Domain.Entities
             if (quantity <= 0)
                 throw new ArgumentException("quantity must be positive");
 
-            if (unitPrice <= 0)
+            if (unitPrice <= 0m)
                 throw new ArgumentException("Unit price must be positive");
             
             CreatedAt = DateTime.UtcNow;

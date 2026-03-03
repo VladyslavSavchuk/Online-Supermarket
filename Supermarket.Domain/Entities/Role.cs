@@ -6,6 +6,10 @@ namespace Supermarket.Domain.Entities
     {
         public string Name { get; private set; }
 
+        private List<User> _users = new List<User>();
+
+        public IReadOnlyCollection<User> Users => _users;
+
         private Role() { } // for EF Core
 
         public Role(string name)

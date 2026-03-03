@@ -6,6 +6,9 @@ namespace Supermarket.Domain.Entities
     {
         public string Name { get; private set; }
 
+        private readonly List<Product> _products = new List<Product>();
+        public IReadOnlyCollection<Product> Products => _products;
+
         private Category() { } // for EF Core
 
         public Category(string name)

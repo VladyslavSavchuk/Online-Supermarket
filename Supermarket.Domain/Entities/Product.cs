@@ -12,6 +12,8 @@ namespace Supermarket.Domain.Entities
 
         public int CategoryId { get; private set; }
 
+        public Category Category { get; private set; } = null!;
+
         private Product() { } // for EF Core
 
         public Product(string name, decimal price, int stockQuantity, int categoryId)
@@ -19,7 +21,7 @@ namespace Supermarket.Domain.Entities
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name is required");
 
-            if (price <= 0)
+            if (price <= 0m) // use m so 0 is decimal literal, for performace and no implicit casting
                 throw new ArgumentException("Price must be positive");
 
             if (stockQuantity < 0)
@@ -34,7 +36,7 @@ namespace Supermarket.Domain.Entities
 
         public void UpdatePrice(decimal newPrice)
         {
-            if (newPrice <= 0)
+            if (newPrice <= 0m)
                 throw new ArgumentException("Price must be positive");
 
             Price = newPrice;

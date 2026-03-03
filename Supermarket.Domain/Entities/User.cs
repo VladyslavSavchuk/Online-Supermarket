@@ -12,6 +12,11 @@ namespace Supermarket.Domain.Entities
 
         public int RoleId { get; private set; }
 
+        public Role Role { get; private set; } = null!;
+
+        private List<Order> _orders = new List<Order>();
+        public IReadOnlyCollection<Order> Orders => _orders;
+
         private User() { } // for EF Core
 
         public User(string userName, string fullName, decimal balance, int roleId)
@@ -22,7 +27,7 @@ namespace Supermarket.Domain.Entities
             if (string.IsNullOrWhiteSpace(fullName))
                 throw new ArgumentException("Full name is required");
 
-            if (balance < 0)
+            if (balance < 0m) // use m so 0 is decimal literal, for performace and no implicit casting
                 throw new ArgumentException("Balance must be positive");
 
             CreatedAt = DateTime.UtcNow;
